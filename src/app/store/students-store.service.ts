@@ -1,4 +1,4 @@
-import {Injectable, signal} from '@angular/core';
+import {effect, Injectable, signal} from '@angular/core';
 import {Student} from '../models';
 import {HttpClient} from '@angular/common/http';
 import {switchMap, tap} from 'rxjs';
@@ -20,7 +20,10 @@ export class StudentsStoreService {
   searchTerm = signal('');
 
   constructor(private http: HttpClient) {
-    this.loadStudents()
+    effect(() => {
+      this.page();
+      this.loadStudents()
+    });
   }
 
   loadStudents() {
@@ -29,7 +32,7 @@ export class StudentsStoreService {
     let search = this.searchTerm().trim();
     let searchParam = search ? `?search=${search}` : '';
 
-    this.http.get<Student[]>(`${this.apiBaseUrl}/students${this.searchTerm}`).pipe(
+    this.http.get<Student[]>(`${this.apiBaseUrl}/students${searchParam}`).pipe(
       tap(students => this.total.set(students.length)),
       switchMap(() => {
         return this.http.get<Student[]>(`${this.apiBaseUrl}/students?page=${this.page()}&limit=${this.pageSize()}`);
@@ -44,6 +47,10 @@ export class StudentsStoreService {
         this.error.set('Failed to load students');
       }
   })
-
   }
+
+  pageChanged(newPage: number) {
+    this.page.set(newPage);
+  }
+
 }

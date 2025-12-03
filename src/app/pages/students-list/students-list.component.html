@@ -1,1 +1,10 @@
-<p>students-list works!</p>
+<app-generic-grid
+  [data]="store.students()"
+  [columns]="studentsColumns"
+  [page]="store.page()"
+  [pageSize]="store.pageSize()"
+  [total]="store.total()"
+  (pageChanged)="onPageChange($event)"
+>
+
+</app-generic-grid>

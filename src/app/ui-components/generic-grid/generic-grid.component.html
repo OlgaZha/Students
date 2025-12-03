@@ -1,1 +1,28 @@
-<p>generic-grid works!</p>
+@if(data().length) {
+  <table>
+    <thead>
+    @for(col of columns(); track col.key){
+      <th>{{col.label}}</th>
+    }
+    </thead>
+    <tbody>
+      @for(row of data(); track row.id){
+        <tr>
+          @for (col of columns(); track col.key){
+            <td>{{row[col.key]}}</td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div>
+    <button [disabled]="page() == 1" (click)="previous()">Prev</button>
+    <p>{{page()}} from {{totalPages()}}</p>
+    <button [disabled]="page() == totalPages()" (click)="next()">Next</button>
+  </div>
+}
+@else {
+  <p>No records</p>
+}
+
