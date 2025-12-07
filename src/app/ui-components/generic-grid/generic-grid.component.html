@@ -1,25 +1,25 @@
 @if(data().length) {
-  <table>
-    <thead>
+  <table class="table">
+    <thead class="table-header">
     @for(col of columns(); track col.key){
-      <th>{{col.label}}</th>
+      <th class="table-header__label">{{col.label}}</th>
     }
     </thead>
     <tbody>
       @for(row of data(); track row.id){
-        <tr>
+        <tr class="table-row">
           @for (col of columns(); track col.key){
-            <td>{{row[col.key]}}</td>
+            <td class="table-row__cell">{{row[col.key]}}</td>
           }
         </tr>
       }
     </tbody>
   </table>
 
-  <div>
-    <button [disabled]="page() == 1" (click)="previous()">Prev</button>
+  <div class="navigation">
+    <button [ngClass]="page() == 1 ? 'disabled navigation-btn' : 'navigation-btn'" [disabled]="page() == 1" (click)="previous()">Prev</button>
     <p>{{page()}} from {{totalPages()}}</p>
-    <button [disabled]="page() == totalPages()" (click)="next()">Next</button>
+    <button [ngClass]="page() == totalPages() ? 'disabled navigation-btn' : 'navigation-btn'" [disabled]="page() == totalPages()" (click)="next()">Next</button>
   </div>
 }
 @else {

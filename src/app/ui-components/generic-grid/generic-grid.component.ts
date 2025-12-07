@@ -1,9 +1,12 @@
 import {Component, computed, input, output} from '@angular/core';
 import {ColumnDef} from '../../models';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-generic-grid',
-  imports: [],
+  imports: [
+    NgClass
+  ],
   templateUrl: './generic-grid.component.html',
   styleUrl: './generic-grid.component.scss'
 })
