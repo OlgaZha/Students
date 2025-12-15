@@ -19,38 +19,62 @@ export class StudentsStoreService {
 
   searchTerm = signal('');
 
+  groupFilter = signal<string | null>(null);
+  ageFrom = signal<number>(0);
+  ageTo = signal<number>(0);
+
   constructor(private http: HttpClient) {
     effect(() => {
       this.page();
-      this.loadStudents()
+      this.searchTerm();
+      this.groupFilter();
+      this.ageFrom();
+      this.ageTo();
+      this.loadStudents();
     });
   }
 
   loadStudents() {
     this.loading.set(true);
     this.error.set(null);
-    let search = this.searchTerm().trim();
-    let searchParam = search ? `?search=${search}` : '';
 
-    this.http.get<Student[]>(`${this.apiBaseUrl}/students${searchParam}`).pipe(
-      tap(students => this.total.set(students.length)),
-      switchMap(() => {
-        return this.http.get<Student[]>(`${this.apiBaseUrl}/students?page=${this.page()}&limit=${this.pageSize()}`);
+    this.http.get<Student[]>(`${this.apiBaseUrl}/students`)
+      .subscribe({
+        next: all => {
+          let filtered = all;
+          let search = this.searchTerm().trim().toLowerCase();
+          if(search) {
+            filtered = filtered.filter(student => student.name.toLowerCase().includes(search) || student.email.toLowerCase().includes(search));
+          }
+          if(this.groupFilter()){
+            filtered = filtered.filter(student => student.group === this.groupFilter());
+          }
+          if(this.ageFrom()){
+            filtered = filtered.filter(student => student.age >= this.ageFrom());
+          }
+          if(this.ageTo()){
+            filtered = filtered.filter(student => student.age <= this.ageTo());
+          }
+          this.total.set(filtered.length);
+          let start = (this.page() - 1) * this.pageSize();
+          let end = start + this.pageSize();
+          filtered = filtered.slice(start, end);
+          this.students.set(filtered);
+          this.loading.set(false);
+        },
+        error: error => {
+          this.loading.set(false);
+          this.error.set('Failed to load students');
+        }
       })
-    ).subscribe({
-      next : (students: Student[]) => {
-        this.students.set(students);
-        this.loading.set(false);
-      },
-      error: error => {
-        this.loading.set(false);
-        this.error.set('Failed to load students');
-      }
-  })
   }
 
   pageChanged(newPage: number) {
     this.page.set(newPage);
+  }
+
+  groupChanged(newGroup: string) {
+    this.groupFilter.set(newGroup);
   }
 
 }

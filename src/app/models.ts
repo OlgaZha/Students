@@ -4,8 +4,8 @@ export interface Student {
   email: string;
   group: string;
   avatar?: string;
-  age?: number;
-  createdAt?: number;
+  age: number;
+  createdAt: number;
 }
 
 export interface ColumnDef<T> {

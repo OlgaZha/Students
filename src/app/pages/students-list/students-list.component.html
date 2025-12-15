@@ -1,3 +1,11 @@
+<input type="text" placeholder="Search" [ngModel]="store.searchTerm()" (ngModelChange)="store.searchTerm.set($event)">
+<input type="number" [ngModel]="store.ageFrom()" (ngModelChange)="store.ageFrom.set($event)">
+<input type="number" [ngModel]="store.ageTo()" (ngModelChange)="store.ageTo.set($event)">
+<select [(ngModel)]="group" (ngModelChange)=onGroupChange($event)>
+  <option [value]="null">All groups</option>
+  <option *ngFor="let group of groups" [value]='group'>{{group}}</option>
+</select>
+
 <app-generic-grid
   [data]="store.students()"
   [columns]="studentsColumns"
