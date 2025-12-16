@@ -4,6 +4,7 @@ import {StudentsStoreService} from '../../store/students-store.service';
 import {GenericGridComponent} from '../../ui-components/generic-grid/generic-grid.component';
 import {FormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-students-list',
@@ -25,6 +26,7 @@ export class StudentsListComponent {
   groups: string[] = ['group 1', 'group 2', 'group 3', 'group 4', 'group 5', 'group 6'];
 
   store = inject(StudentsStoreService);
+  router = inject(Router);
 
   group = model(this.store.groupFilter);
 
@@ -37,4 +39,11 @@ export class StudentsListComponent {
     this.store.page.set(1);
   }
 
+  onCreatedChanged(createdFrom: string | null, createdTo: string | null) {
+    this.store.setCreatedRange(createdFrom, createdTo);
+  }
+
+  onEditChanged(row: Student) {
+    this.router.navigate(['/students', row.id, 'edit']);
+  }
 }

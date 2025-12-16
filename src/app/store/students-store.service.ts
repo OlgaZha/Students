@@ -23,6 +23,9 @@ export class StudentsStoreService {
   ageFrom = signal<number>(0);
   ageTo = signal<number>(0);
 
+  createdFrom = signal<string | null>('');
+  createdTo = signal<string | null>('');
+
   constructor(private http: HttpClient) {
     effect(() => {
       this.page();
@@ -30,6 +33,8 @@ export class StudentsStoreService {
       this.groupFilter();
       this.ageFrom();
       this.ageTo();
+      this.createdFrom();
+      this.createdTo();
       this.loadStudents();
     });
   }
@@ -43,6 +48,8 @@ export class StudentsStoreService {
         next: all => {
           let filtered = all;
           let search = this.searchTerm().trim().toLowerCase();
+          const from = this.createdFrom();
+          const to = this.createdTo();
           if(search) {
             filtered = filtered.filter(student => student.name.toLowerCase().includes(search) || student.email.toLowerCase().includes(search));
           }
@@ -54,6 +61,16 @@ export class StudentsStoreService {
           }
           if(this.ageTo()){
             filtered = filtered.filter(student => student.age <= this.ageTo());
+          }
+          if(from){
+            const fromTime = new Date(from).getMilliseconds();
+            filtered = filtered.filter(student => {
+              return student.createdAt * 1000 >= fromTime
+            });
+          }
+          if(to){
+            const toTime = new Date(to).getMilliseconds();
+            filtered = filtered.filter(student => student.createdAt * 1000 <= toTime);
           }
           this.total.set(filtered.length);
           let start = (this.page() - 1) * this.pageSize();
@@ -75,6 +92,22 @@ export class StudentsStoreService {
 
   groupChanged(newGroup: string) {
     this.groupFilter.set(newGroup);
+  }
+
+  setCreatedRange(createdFrom: string | null, createdTo:string | null){
+    this.createdFrom.set(createdFrom);
+    this.createdTo.set(createdTo);
+    this.page.set(1);
+  }
+
+  resetFilters() {
+    this.searchTerm.set('');
+    this.groupFilter.set(null);
+    this.ageFrom.set(0);
+    this.ageTo.set(0);
+    this.page.set(1);
+    this.createdFrom.set('');
+    this.createdTo.set('');
   }
 
 }

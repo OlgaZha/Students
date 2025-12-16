@@ -4,6 +4,7 @@
     @for(col of columns(); track col.key){
       <th class="table-header__label">{{col.label}}</th>
     }
+    <th>Actions</th>
     </thead>
     <tbody>
       @for(row of data(); track row.id){
@@ -11,6 +12,7 @@
           @for (col of columns(); track col.key){
             <td class="table-row__cell">{{row[col.key]}}</td>
           }
+          <td><button (click)="onEdit(row)">Edit</button></td>
         </tr>
       }
     </tbody>

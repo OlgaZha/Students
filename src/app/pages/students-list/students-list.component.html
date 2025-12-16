@@ -1,10 +1,15 @@
 <input type="text" placeholder="Search" [ngModel]="store.searchTerm()" (ngModelChange)="store.searchTerm.set($event)">
 <input type="number" [ngModel]="store.ageFrom()" (ngModelChange)="store.ageFrom.set($event)">
 <input type="number" [ngModel]="store.ageTo()" (ngModelChange)="store.ageTo.set($event)">
+<input type="date" [ngModel]="store.createdFrom()" (ngModelChange)="onCreatedChanged($event, createdTo.value)" #createdFrom="ngModel">
+<input type="date" [ngModel]="store.createdTo()" (ngModelChange)="onCreatedChanged(createdFrom.value, $event)" #createdTo="ngModel">
+
 <select [(ngModel)]="group" (ngModelChange)=onGroupChange($event)>
   <option [value]="null">All groups</option>
   <option *ngFor="let group of groups" [value]='group'>{{group}}</option>
 </select>
+
+<button (click)="store.resetFilters()">Clear filters</button>
 
 <app-generic-grid
   [data]="store.students()"
@@ -13,6 +18,7 @@
   [pageSize]="store.pageSize()"
   [total]="store.total()"
   (pageChanged)="onPageChange($event)"
+  (edit)="onEditChanged($event)"
 >
 
 </app-generic-grid>

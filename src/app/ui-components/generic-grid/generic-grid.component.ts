@@ -19,7 +19,9 @@ export class GenericGridComponent<T extends {id: string | number}> {
   pageSize = input.required<number>();
   // records id API
   total = input.required<number>();
+
   pageChanged = output<number>();
+  edit = output<T>();
 
   totalPages = computed(() => Math.max(1, Math.ceil(this.total() / this.pageSize())));
 
@@ -33,5 +35,9 @@ export class GenericGridComponent<T extends {id: string | number}> {
     if(this.page() > 1) {
       this.pageChanged.emit(this.page() - 1);
     }
+  }
+
+  onEdit(row: T){
+    this.edit.emit(row);
   }
 }
