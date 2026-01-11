@@ -1,15 +1,16 @@
-<input type="text" placeholder="Search" [ngModel]="store.searchTerm()" (ngModelChange)="store.searchTerm.set($event)">
-<input type="number" [ngModel]="store.ageFrom()" (ngModelChange)="store.ageFrom.set($event)">
-<input type="number" [ngModel]="store.ageTo()" (ngModelChange)="store.ageTo.set($event)">
-<input type="date" [ngModel]="store.createdFrom()" (ngModelChange)="onCreatedChanged($event, createdTo.value)" #createdFrom="ngModel">
-<input type="date" [ngModel]="store.createdTo()" (ngModelChange)="onCreatedChanged(createdFrom.value, $event)" #createdTo="ngModel">
+<app-navbar></app-navbar>
+<input type="text" placeholder="Search" [ngModel]="store.searchTerm()" (ngModelChange)="store.searchTerm.set($event)" class="input">
+<input type="number" [ngModel]="store.ageFrom()" (ngModelChange)="store.ageFrom.set($event)" class="input">
+<input type="number" [ngModel]="store.ageTo()" (ngModelChange)="store.ageTo.set($event)" class="input">
+<input type="date" [ngModel]="store.createdFrom()" (ngModelChange)="onCreatedChanged($event, createdTo.value)" #createdFrom="ngModel" class="input">
+<input type="date" [ngModel]="store.createdTo()" (ngModelChange)="onCreatedChanged(createdFrom.value, $event)" #createdTo="ngModel" class="input">
 
-<select [(ngModel)]="group" (ngModelChange)=onGroupChange($event)>
+<select [(ngModel)]="group" (ngModelChange)=onGroupChange($event) class="select">
   <option [value]="null">All groups</option>
   <option *ngFor="let group of groups" [value]='group'>{{group}}</option>
 </select>
 
-<button (click)="store.resetFilters()">Clear filters</button>
+<button (click)="store.resetFilters()" class="btn">Clear filters</button>
 
 <app-generic-grid
   [data]="store.students()"

@@ -5,13 +5,15 @@ import {GenericGridComponent} from '../../ui-components/generic-grid/generic-gri
 import {FormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
+import {NavbarComponent} from '../../navbar/navbar.component';
 
 @Component({
   selector: 'app-students-list',
   imports: [
     GenericGridComponent,
     FormsModule,
-    NgForOf
+    NgForOf,
+    NavbarComponent
   ],
   templateUrl: './students-list.component.html',
   styleUrl: './students-list.component.scss'

@@ -63,13 +63,13 @@ export class StudentsStoreService {
             filtered = filtered.filter(student => student.age <= this.ageTo());
           }
           if(from){
-            const fromTime = new Date(from).getMilliseconds();
+            const fromTime = new Date(from).getTime();
             filtered = filtered.filter(student => {
               return student.createdAt * 1000 >= fromTime
             });
           }
           if(to){
-            const toTime = new Date(to).getMilliseconds();
+            const toTime = new Date(to).getTime();
             filtered = filtered.filter(student => student.createdAt * 1000 <= toTime);
           }
           this.total.set(filtered.length);

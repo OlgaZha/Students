@@ -12,7 +12,7 @@
           @for (col of columns(); track col.key){
             <td class="table-row__cell">{{row[col.key]}}</td>
           }
-          <td><button (click)="onEdit(row)">Edit</button></td>
+          <td><button (click)="onEdit(row)" class="btn">Edit</button></td>
         </tr>
       }
     </tbody>
