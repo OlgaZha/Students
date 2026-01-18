@@ -5,12 +5,14 @@
 <input type="date" [ngModel]="store.createdFrom()" (ngModelChange)="onCreatedChanged($event, createdTo.value)" #createdFrom="ngModel" class="input">
 <input type="date" [ngModel]="store.createdTo()" (ngModelChange)="onCreatedChanged(createdFrom.value, $event)" #createdTo="ngModel" class="input">
 
-<select [(ngModel)]="group" (ngModelChange)=onGroupChange($event) class="select">
-  <option [value]="null">All groups</option>
-  <option *ngFor="let group of groups" [value]='group'>{{group}}</option>
+<select [ngModel]="store.groupFilter()" (ngModelChange)=onGroupChange($event) class="select">
+  <option [ngValue]="null" >All groups</option>
+  <option *ngFor="let group of groups" [ngValue]='group'>{{group}}</option>
 </select>
 
 <button (click)="store.resetFilters()" class="btn">Clear filters</button>
+
+<button (click)="onCreateUser()" >Create user</button>
 
 <app-generic-grid
   [data]="store.students()"

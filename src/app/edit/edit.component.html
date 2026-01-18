@@ -1,1 +1,23 @@
-<p>edit works!</p>
+<div>
+  @if (student()) {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+        <label>Name: </label>
+        <input formControlName="name">
+      </div>
+      <div>
+        <label>Email: </label>
+        <input formControlName="email">
+      </div>
+      <div>
+        <label>Group: </label>
+        <input formControlName="group">
+      </div>
+      <div>
+        <label>Age: </label>
+        <input formControlName="age">
+      </div>
+      <button type="submit" (submit)="onSubmit()">Submit</button>
+    </form>
+  }
+</div>

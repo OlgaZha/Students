@@ -110,4 +110,16 @@ export class StudentsStoreService {
     this.createdTo.set('');
   }
 
+  updateStudent(id: string, student: Student){
+    this.loading.set(true);
+    this.error.set(null);
+    return this.http.put(`${this.apiBaseUrl}/students/${id}`, student).pipe(
+      tap(student => {
+        this.loading.set(false);
+        this.loadStudents();
+      })
+    )
+
+  }
+
 }

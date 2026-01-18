@@ -48,4 +48,8 @@ export class StudentsListComponent {
   onEditChanged(row: Student) {
     this.router.navigate(['/students', row.id, 'edit']);
   }
+
+  onCreateUser(){
+    this.router.navigate(['/students/create']);
+  }
 }
