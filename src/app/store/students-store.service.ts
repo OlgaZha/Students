@@ -119,7 +119,17 @@ export class StudentsStoreService {
         this.loadStudents();
       })
     )
+  }
 
+  createStudent(student: Student) {
+    this.loading.set(true);
+    this.error.set(null);
+    return this.http.post<Student>(`${this.apiBaseUrl}/students`, student).pipe(
+      tap(() => {
+        this.loading.set(false);
+        this.loadStudents()
+      })
+    )
   }
 
 }

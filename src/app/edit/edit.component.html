@@ -1,23 +1,43 @@
 <div>
   @if (student()) {
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-row">
         <label>Name: </label>
-        <input formControlName="name">
+        <input formControlName="name" class="input">
+        @if(form.get('name')?.invalid && form.get('name')?.touched) {
+          <div class="error">
+            Name is required (max 100 characters).
+          </div>
+        }
       </div>
-      <div>
+      <div class="form-row">
         <label>Email: </label>
-        <input formControlName="email">
+        <input formControlName="email" class="input">
+        @if(form.get('email')?.invalid && form.get('email')?.touched) {
+          <div class="error">
+            Please enter a valid email.
+          </div>
+        }
       </div>
-      <div>
+      <div class="form-row">
         <label>Group: </label>
-        <input formControlName="group">
+        <input formControlName="group" class="input">
+        @if(form.get('group')?.invalid && form.get('group')?.touched) {
+          <div class="error">
+            Group is required.
+          </div>
+        }
       </div>
-      <div>
+      <div class="form-row">
         <label>Age: </label>
-        <input formControlName="age">
+        <input formControlName="age" class="input">
+        @if(form.get('age')?.invalid && form.get('age')?.touched) {
+          <div class="error">
+            Age must be between 1 and 120.
+          </div>
+        }
       </div>
-      <button type="submit" (submit)="onSubmit()">Submit</button>
+        <button type="submit" (submit)="onSubmit()" class="btn submit-btn">Submit</button>
     </form>
   }
 </div>

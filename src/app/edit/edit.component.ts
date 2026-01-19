@@ -10,7 +10,8 @@ import {StudentsStoreService} from '../store/students-store.service';
     ReactiveFormsModule
   ],
   templateUrl: './edit.component.html',
-  styleUrl: './edit.component.scss'
+  styleUrl: './edit.component.scss',
+  standalone: true,
 })
 export class EditComponent implements OnInit {
     route = inject(Router);
@@ -62,6 +63,7 @@ export class EditComponent implements OnInit {
     }
     let currentStudent = this.student();
     let payload: Student = {...currentStudent, ...this.form.value}
+    this.studentsService.createStudent(payload);
     this.studentsService.updateStudent(payload.id, payload).subscribe({
       next: () => {
         this.route.navigate(['students']);

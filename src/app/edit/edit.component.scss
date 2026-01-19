@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+}
+
+.form-row label {
+  width: 120px;
+  text-align: right;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  font-weight: bold;
+}
