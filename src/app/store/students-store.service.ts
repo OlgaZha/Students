@@ -7,9 +7,10 @@ import {switchMap, tap} from 'rxjs';
   providedIn: 'root'
 })
 export class StudentsStoreService {
-  apiBaseUrl = 'https://6927242526e7e41498fd2ed6.mockapi.io/'
+  apiBaseUrl = 'https://6927242526e7e41498fd2ed6.mockapi.io'
 
   students = signal<Student[]>([]);
+  allStudents = signal<Student[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
 
@@ -86,6 +87,20 @@ export class StudentsStoreService {
       })
   }
 
+  //all students without pagination
+  fetchStudents() {
+    return this.http.get<Student[]>(`${this.apiBaseUrl}/students`).subscribe({
+      next: students => {
+        this.allStudents.set(students);
+        this.loading.set(false);
+      },
+      error: error => {
+        this.loading.set(false);
+        this.error.set('Failed to load students');
+      }
+    })
+  }
+
   pageChanged(newPage: number) {
     this.page.set(newPage);
   }
@@ -131,5 +146,7 @@ export class StudentsStoreService {
       })
     )
   }
+
+
 
 }

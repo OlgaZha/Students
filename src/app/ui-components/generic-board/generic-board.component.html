@@ -1,1 +1,25 @@
-<p>generic-board works!</p>
+<div class="board">
+  @for ( group of pagedGroups(); track group.name) {
+    <div class="column">
+      <div class="column-header">
+        <span class="group-name">{{group.name}}</span>
+        <span>{{group.items.length}}</span>
+      </div>
+      <div class="column-body">
+        @for (item of group.items; track item) {
+          <div class="card">
+            <ng-container [ngTemplateOutlet]="itemTemplate()" [ngTemplateOutletContext]="{$implicit: item}">
+            </ng-container>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+</div>
+
+<div class="navigation">
+  <button [ngClass]="currentPage() == 1 ? 'disabled navigation-btn' : 'navigation-btn'" [disabled]="currentPage() == 1" (click)="previous()">Prev</button>
+  <p>{{currentPage()}} from {{groupsTotalPages()}}</p>
+  <button [ngClass]="currentPage() == groupsTotalPages() ? 'disabled navigation-btn' : 'navigation-btn'" [disabled]="currentPage() == groupsTotalPages()" (click)="next()">Next</button>
+</div>

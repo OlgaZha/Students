@@ -1,0 +1,19 @@
+.board {
+  display: flex;
+  gap: 12px;
+}
+
+.column {
+  flex: 0 0 200px;
+  width: 200px;
+}
+
+.card {
+  border: 1px black solid;
+  margin: 5px;
+  padding: 10px;
+}
+
+.group-name {
+  margin: 20px;
+}

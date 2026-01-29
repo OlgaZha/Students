@@ -7,5 +7,5 @@ export const routes: Routes = [{ path: '', redirectTo: 'students', pathMatch: 'f
   {path: 'students', component: StudentsListComponent},
   {path: 'students/:id/edit', component: EditComponent},
   {path: 'students/create', component: EditComponent},
-  {path: 'students/groups', component: GroupsComponent},
+  {path: 'groups', component: GroupsComponent},
 ];

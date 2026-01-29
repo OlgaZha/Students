@@ -63,15 +63,26 @@ export class EditComponent implements OnInit {
     }
     let currentStudent = this.student();
     let payload: Student = {...currentStudent, ...this.form.value}
-    this.studentsService.createStudent(payload);
-    this.studentsService.updateStudent(payload.id, payload).subscribe({
+    if(payload.id) {
+      this.studentsService.updateStudent(payload.id, payload).subscribe({
+          next: () => {
+            this.route.navigate(['students']);
+          },
+          error: error => {
+            console.log(error);
+          }
+        }
+      )
+      return;
+    }
+    return this.studentsService.createStudent(payload).subscribe({
       next: () => {
         this.route.navigate(['students']);
       },
       error: error => {
         console.log(error);
       }
-      }
-    )
+    })
+
   }
 }
