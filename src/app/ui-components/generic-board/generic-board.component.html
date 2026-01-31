@@ -3,8 +3,11 @@
     <div class="column">
       <div class="column-header">
         <span class="group-name">{{group.name}}</span>
-        <span>{{group.items.length}}</span>
+        <div class="group-length">
+          <span class="group-length-number">{{group.items.length}}</span>
+        </div>
       </div>
+      <hr>
       <div class="column-body">
         @for (item of group.items; track item) {
           <div class="card">
@@ -20,6 +23,6 @@
 
 <div class="navigation">
   <button [ngClass]="currentPage() == 1 ? 'disabled navigation-btn' : 'navigation-btn'" [disabled]="currentPage() == 1" (click)="previous()">Prev</button>
-  <p>{{currentPage()}} from {{groupsTotalPages()}}</p>
+  <p>Groups page {{currentPage()}} / {{groupsTotalPages()}} (Groups:{{pagedGroups().length}})</p>
   <button [ngClass]="currentPage() == groupsTotalPages() ? 'disabled navigation-btn' : 'navigation-btn'" [disabled]="currentPage() == groupsTotalPages()" (click)="next()">Next</button>
 </div>
